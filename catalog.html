@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>E-Book Catalog</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+        /* ================= NAVIGATION ================= */
+
+        nav {
+            background-color: #243b55;
+            padding: 18px 7%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+            font-size: 15px;
+        }
+
+        nav a:hover {
+            color: #4facfe;
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .catalog-header {
+            background:
+                linear-gradient(
+                    rgba(36, 59, 85, 0.9),
+                    rgba(36, 59, 85, 0.9)
+                ),
+                url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f")
+                center/cover;
+
+            color: white;
+            text-align: center;
+
+            padding: 60px 20px;
+        }
+
+        .catalog-header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+
+        .catalog-header p {
+            font-size: 18px;
+        }
+
+
+        /* ================= SEARCH ================= */
+
+        .search-section {
+            background: white;
+            padding: 30px 7%;
+        }
+
+        .search-box {
+            max-width: 650px;
+            margin: auto;
+
+            display: flex;
+        }
+
+        .search-box input {
+            flex: 1;
+
+            padding: 14px;
+
+            border: 1px solid #ccc;
+            border-radius: 5px 0 0 5px;
+
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-box button {
+            padding: 14px 25px;
+
+            border: none;
+
+            background-color: #243b55;
+            color: white;
+
+            border-radius: 0 5px 5px 0;
+
+            cursor: pointer;
+        }
+
+        .search-box button:hover {
+            background-color: #4facfe;
+        }
+
+
+        /* ================= SUBJECT ================= */
+
+        .subject-section {
+            padding: 35px 7%;
+        }
+
+        .subject-title {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            margin-bottom: 18px;
+        }
+
+        .subject-title h2 {
+            color: #243b55;
+            font-size: 25px;
+        }
+
+        .subject-title span {
+            color: #777;
+            font-size: 14px;
+        }
+
+
+        /* ================= BOOK SCROLL ================= */
+
+        .book-container {
+            display: flex;
+
+            gap: 20px;
+
+            overflow-x: auto;
+
+            padding: 10px 5px 20px;
+
+            scroll-behavior: smooth;
+        }
+
+
+        .book-container::-webkit-scrollbar {
+            height: 9px;
+        }
+
+        .book-container::-webkit-scrollbar-track {
+            background: #ddd;
+            border-radius: 10px;
+        }
+
+        .book-container::-webkit-scrollbar-thumb {
+            background: #243b55;
+            border-radius: 10px;
+        }
+
+        .book-container::-webkit-scrollbar-thumb:hover {
+            background: #4facfe;
+        }
+
+
+        /* ================= BOOK CARD ================= */
+
+        .book {
+            background: white;
+
+            min-width: 220px;
+            width: 220px;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+
+            flex-shrink: 0;
+
+            transition: 0.3s;
+        }
+
+        .book:hover {
+            transform: translateY(-6px);
+
+            box-shadow:
+                0 7px 18px rgba(0,0,0,0.2);
+        }
+
+
+        .book img {
+            width: 100%;
+            height: 250px;
+
+            object-fit: cover;
+        }
+
+
+        .book-content {
+            padding: 15px;
+        }
+
+
+        .book-content h3 {
+            color: #243b55;
+
+            font-size: 18px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .author {
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .price {
+            color: #222;
+
+            font-weight: bold;
+
+            margin-bottom: 12px;
+        }
+
+
+        .buttons {
+            display: flex;
+
+            gap: 8px;
+        }
+
+
+        .read-btn,
+        .cart-btn {
+            padding: 8px 10px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+            font-size: 13px;
+        }
+
+
+        .read-btn {
+            background-color: #243b55;
+            color: white;
+        }
+
+
+        .cart-btn {
+            background-color: #4facfe;
+            color: white;
+        }
+
+
+        .read-btn:hover {
+            background-color: #182b40;
+        }
+
+
+        .cart-btn:hover {
+            background-color: #238ce0;
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background-color: #243b55;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+            margin-top: 30px;
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 800px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            nav a {
+                margin-left: 8px;
+                margin-right: 8px;
+            }
+
+            .catalog-header h1 {
+                font-size: 32px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav>
+
+    <div class="logo">
+        📚 E-Book Library
+    </div>
+
+    <div>
+
+        <a href="index.html">Home</a>
+
+        <a href="register.html">Register</a>
+
+        <a href="login.html">Login</a>
+
+        <a href="catalog.html">Catalog</a>
+
+        <a href="cart.html">Cart 🛒</a>
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HEADER ================= -->
+
+<section class="catalog-header">
+
+    <h1>
+        📚 E-Book Catalog
+    </h1>
+
+    <p>
+        Explore books from different subjects
+    </p>
+
+</section>
+
+
+<!-- ================= SEARCH ================= -->
+
+<section class="search-section">
+
+    <div class="search-box">
+
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search books or authors..."
+        >
+
+        <button onclick="searchBooks()">
+            🔍 Search
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- COMPUTER SCIENCE -->
+<!-- ===================================================== -->
+
+<section class="subject-section">
+
+    <div class="subject-title">
+
+        <h2>💻 Computer Science</h2>
+
+        <span>
+            ← Scroll →
+        </span>
+
+    </div>
+
+
+    <div class="book-container">
+
+
+        <!-- BOOK 1 -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4"
+                alt="Programming"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Programming Basics
+                </h3>
+
+                <p class="author">
+                    Author: James Smith
+                </p>
+
+                <p class="price">
+                    ₹299
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Programming Basics',
+                            299,
+                            'James Smith',
+                            'Computer Science',
+                            'https://images.unsplash.com/photo-1515879218367-8466d910aaa4'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOOK 2 -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1555066931-4365d14bab8c"
+                alt="Web Development"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Web Development
+                </h3>
+
+                <p class="author">
+                    Author: David Brown
+                </p>
+
+                <p class="price">
+                    ₹349
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Web Development',
+                            349,
+                            'David Brown',
+                            'Computer Science',
+                            'https://images.unsplash.com/photo-1555066931-4365d14bab8c'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOOK 3 -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1518770660439-4636190af475"
+                alt="Computer Science"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Computer Science
+                </h3>
+
+                <p class="author">
+                    Author: Robert Lee
+                </p>
+
+                <p class="price">
+                    ₹399
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Computer Science',
+                            399,
+                            'Robert Lee',
+                            'Computer Science',
+                            'https://images.unsplash.com/photo-1518770660439-4636190af475'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BOOK 4 -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1516116216624-53e697fedbea"
+                alt="Artificial Intelligence"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Artificial Intelligence
+                </h3>
+
+                <p class="author">
+                    Author: Alan Wilson
+                </p>
+
+                <p class="price">
+                    ₹449
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Artificial Intelligence',
+                            449,
+                            'Alan Wilson',
+                            'Computer Science',
+                            'https://images.unsplash.com/photo-1516116216624-53e697fedbea'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- SCIENCE -->
+<!-- ===================================================== -->
+
+<section class="subject-section">
+
+    <div class="subject-title">
+
+        <h2>🔬 Science</h2>
+
+        <span>
+            ← Scroll →
+        </span>
+
+    </div>
+
+
+    <div class="book-container">
+
+
+        <!-- PHYSICS -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1532094349884-543bc11b234d"
+                alt="Physics"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Fundamentals of Physics
+                </h3>
+
+                <p class="author">
+                    Author: Albert Martin
+                </p>
+
+                <p class="price">
+                    ₹299
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Fundamentals of Physics',
+                            299,
+                            'Albert Martin',
+                            'Science',
+                            'https://images.unsplash.com/photo-1532094349884-543bc11b234d'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CHEMISTRY -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1532187863486-abf9dbad1b69"
+                alt="Chemistry"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Basic Chemistry
+                </h3>
+
+                <p class="author">
+                    Author: Sarah Wilson
+                </p>
+
+                <p class="price">
+                    ₹279
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Basic Chemistry',
+                            279,
+                            'Sarah Wilson',
+                            'Science',
+                            'https://images.unsplash.com/photo-1532187863486-abf9dbad1b69'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- BIOLOGY -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8"
+                alt="Biology"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Introduction to Biology
+                </h3>
+
+                <p class="author">
+                    Author: Emily Johnson
+                </p>
+
+                <p class="price">
+                    ₹319
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Introduction to Biology',
+                            319,
+                            'Emily Johnson',
+                            'Science',
+                            'https://images.unsplash.com/photo-1530026405186-ed1f139313f8'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ASTRONOMY -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0"
+                alt="Astronomy"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Exploring Astronomy
+                </h3>
+
+                <p class="author">
+                    Author: George Adams
+                </p>
+
+                <p class="price">
+                    ₹359
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Exploring Astronomy',
+                            359,
+                            'George Adams',
+                            'Science',
+                            'https://images.unsplash.com/photo-1532619675605-1ede6c2ed2b0'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- FICTION -->
+<!-- ===================================================== -->
+
+<section class="subject-section">
+
+    <div class="subject-title">
+
+        <h2>📖 Fiction</h2>
+
+        <span>
+            ← Scroll →
+        </span>
+
+    </div>
+
+
+    <div class="book-container">
+
+
+        <!-- ADVENTURE -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1543002588-bfa74002ed7e"
+                alt="Adventure"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    The Great Adventure
+                </h3>
+
+                <p class="author">
+                    Author: Jane Wilson
+                </p>
+
+                <p class="price">
+                    ₹249
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'The Great Adventure',
+                            249,
+                            'Jane Wilson',
+                            'Fiction',
+                            'https://images.unsplash.com/photo-1543002588-bfa74002ed7e'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MYSTERY -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1516979187457-637abb4f9353"
+                alt="Mystery"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    The Mystery House
+                </h3>
+
+                <p class="author">
+                    Author: Daniel White
+                </p>
+
+                <p class="price">
+                    ₹279
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'The Mystery House',
+                            279,
+                            'Daniel White',
+                            'Fiction',
+                            'https://images.unsplash.com/photo-1516979187457-637abb4f9353'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LIFE STORIES -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1544947950-fa07a98d237f"
+                alt="Life Stories"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Life Stories
+                </h3>
+
+                <p class="author">
+                    Author: Emma Brown
+                </p>
+
+                <p class="price">
+                    ₹229
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Life Stories',
+                            229,
+                            'Emma Brown',
+                            'Fiction',
+                            'https://images.unsplash.com/photo-1544947950-fa07a98d237f'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FANTASY -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1511108690759-009324a90311"
+                alt="Fantasy"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Fantasy World
+                </h3>
+
+                <p class="author">
+                    Author: Chris Adams
+                </p>
+
+                <p class="price">
+                    ₹299
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Fantasy World',
+                            299,
+                            'Chris Adams',
+                            'Fiction',
+                            'https://images.unsplash.com/photo-1511108690759-009324a90311'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- BUSINESS -->
+<!-- ===================================================== -->
+
+<section class="subject-section">
+
+    <div class="subject-title">
+
+        <h2>📈 Business & Management</h2>
+
+        <span>
+            ← Scroll →
+        </span>
+
+    </div>
+
+
+    <div class="book-container">
+
+
+        <!-- BUSINESS -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1556761175-b413da4baf72"
+                alt="Business"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Business Success
+                </h3>
+
+                <p class="author">
+                    Author: David Lee
+                </p>
+
+                <p class="price">
+                    ₹399
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Business Success',
+                            399,
+                            'David Lee',
+                            'Business & Management',
+                            'https://images.unsplash.com/photo-1556761175-b413da4baf72'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MANAGEMENT -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7"
+                alt="Management"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Modern Management
+                </h3>
+
+                <p class="author">
+                    Author: Mark Taylor
+                </p>
+
+                <p class="price">
+                    ₹349
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Modern Management',
+                            349,
+                            'Mark Taylor',
+                            'Business & Management',
+                            'https://images.unsplash.com/photo-1556761175-5973dc0f32e7'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- MARKETING -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1551836022-d5d88e9218df"
+                alt="Marketing"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Digital Marketing
+                </h3>
+
+                <p class="author">
+                    Author: Steven Clark
+                </p>
+
+                <p class="price">
+                    ₹379
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Digital Marketing',
+                            379,
+                            'Steven Clark',
+                            'Business & Management',
+                            'https://images.unsplash.com/photo-1551836022-d5d88e9218df'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- LEADERSHIP -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1556761175-4b46a572b786"
+                alt="Leadership"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Leadership Skills
+                </h3>
+
+                <p class="author">
+                    Author: William Jones
+                </p>
+
+                <p class="price">
+                    ₹329
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Leadership Skills',
+                            329,
+                            'William Jones',
+                            'Business & Management',
+                            'https://images.unsplash.com/photo-1556761175-4b46a572b786'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ===================================================== -->
+<!-- MATHEMATICS -->
+<!-- ===================================================== -->
+
+<section class="subject-section">
+
+    <div class="subject-title">
+
+        <h2>📐 Mathematics</h2>
+
+        <span>
+            ← Scroll →
+        </span>
+
+    </div>
+
+
+    <div class="book-container">
+
+
+        <!-- MATHEMATICS -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1509228468518-180dd4864904"
+                alt="Mathematics"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Engineering Mathematics
+                </h3>
+
+                <p class="author">
+                    Author: R. Kumar
+                </p>
+
+                <p class="price">
+                    ₹399
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Engineering Mathematics',
+                            399,
+                            'R. Kumar',
+                            'Mathematics',
+                            'https://images.unsplash.com/photo-1509228468518-180dd4864904'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ALGEBRA -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb"
+                alt="Algebra"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Advanced Algebra
+                </h3>
+
+                <p class="author">
+                    Author: S. Rao
+                </p>
+
+                <p class="price">
+                    ₹329
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Advanced Algebra',
+                            329,
+                            'S. Rao',
+                            'Mathematics',
+                            'https://images.unsplash.com/photo-1635070041078-e363dbe005cb'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CALCULUS -->
+
+        <div class="book">
+
+            <img
+                src="https://images.unsplash.com/photo-1509869175650-a1d97972541a"
+                alt="Calculus"
+            >
+
+            <div class="book-content">
+
+                <h3>
+                    Calculus Made Easy
+                </h3>
+
+                <p class="author">
+                    Author: John Mathew
+                </p>
+
+                <p class="price">
+                    ₹299
+                </p>
+
+                <div class="buttons">
+
+                    <button class="read-btn">
+                        Read
+                    </button>
+
+                    <button
+                        class="cart-btn"
+                        onclick="addToCart(
+                            'Calculus Made Easy',
+                            299,
+                            'John Mathew',
+                            'Mathematics',
+                            'https://images.unsplash.com/photo-1509869175650-a1d97972541a'
+                        )">
+
+                        Add to Cart
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        &copy; 2026 E-Book Management System
+    </p>
+
+    <p>
+        All Rights Reserved.
+    </p>
+
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+
+/* =====================================================
+   ADD BOOK TO CART
+===================================================== */
+
+function addToCart(
+    name,
+    price,
+    author,
+    subject,
+    image
+) {
+
+    // Get existing cart
+    let cart =
+        JSON.parse(
+            localStorage.getItem("cart")
+        ) || [];
+
+
+    // Create book object
+    let book = {
+
+        name: name,
+
+        price: Number(price),
+
+        author: author,
+
+        subject: subject,
+
+        image: image
+
+    };
+
+
+    // Add book
+    cart.push(book);
+
+
+    // Save cart
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+
+    // Show message
+    alert(
+        name + " has been added to your cart!"
+    );
+
+
+    // Open cart
+    window.location.href = "cart.html";
+
+}
+
+
+/* =====================================================
+   SEARCH BOOKS
+===================================================== */
+
+function searchBooks() {
+
+    let input =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+
+    let books =
+        document.querySelectorAll(".book");
+
+
+    books.forEach(function(book) {
+
+        let name =
+            book
+            .querySelector("h3")
+            .textContent
+            .toLowerCase();
+
+
+        let author =
+            book
+            .querySelector(".author")
+            .textContent
+            .toLowerCase();
+
+
+        if (
+            name.includes(input) ||
+            author.includes(input)
+        ) {
+
+            book.style.display = "block";
+
+        } else {
+
+            book.style.display = "none";
+
+        }
+
+    });
+
+}
+
+
+/* =====================================================
+   SEARCH WHEN ENTER IS PRESSED
+===================================================== */
+
+document
+.getElementById("searchInput")
+.addEventListener(
+    "keypress",
+    function(event) {
+
+        if (event.key === "Enter") {
+
+            searchBooks();
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

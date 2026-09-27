@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>E-Book Cart</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            background-color: #f4f6f9;
+            color: #333;
+        }
+
+
+        /* ================= NAVIGATION ================= */
+
+        nav {
+
+            background-color: #243b55;
+
+            padding: 18px 7%;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+        }
+
+
+        .logo {
+
+            color: white;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+        }
+
+
+        nav a {
+
+            color: white;
+
+            text-decoration: none;
+
+            margin-left: 25px;
+
+            font-size: 15px;
+
+        }
+
+
+        nav a:hover {
+
+            color: #4facfe;
+
+        }
+
+
+        /* ================= HEADER ================= */
+
+        .cart-header {
+
+            background:
+                linear-gradient(
+                    rgba(36, 59, 85, 0.92),
+                    rgba(36, 59, 85, 0.92)
+                );
+
+            color: white;
+
+            text-align: center;
+
+            padding: 50px 20px;
+
+        }
+
+
+        .cart-header h1 {
+
+            font-size: 40px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .cart-header p {
+
+            font-size: 17px;
+
+        }
+
+
+        /* ================= MAIN ================= */
+
+        .cart-section {
+
+            width: 90%;
+
+            max-width: 1200px;
+
+            margin: 40px auto;
+
+        }
+
+
+        /* ================= CART TOP ================= */
+
+        .cart-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .cart-top h2 {
+
+            color: #243b55;
+
+        }
+
+
+        .clear-btn {
+
+            background-color: #e74c3c;
+
+            color: white;
+
+            border: none;
+
+            padding: 10px 18px;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+        }
+
+
+        .clear-btn:hover {
+
+            background-color: #c0392b;
+
+        }
+
+
+        /* ================= CART LAYOUT ================= */
+
+        .cart-layout {
+
+            display: grid;
+
+            grid-template-columns: 2fr 1fr;
+
+            gap: 25px;
+
+        }
+
+
+        /* ================= CART ITEMS ================= */
+
+        .cart-items {
+
+            background-color: white;
+
+            border-radius: 10px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.12);
+
+        }
+
+
+        .cart-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+            padding: 20px 0;
+
+            border-bottom: 1px solid #ddd;
+
+        }
+
+
+        .cart-item:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        /* ================= BOOK IMAGE ================= */
+
+        .cart-image {
+
+            width: 110px;
+
+            height: 140px;
+
+            flex-shrink: 0;
+
+            border-radius: 5px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 3px 8px rgba(0,0,0,0.2);
+
+        }
+
+
+        .cart-image img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+
+        /* ================= BOOK DETAILS ================= */
+
+        .cart-details {
+
+            flex: 1;
+
+        }
+
+
+        .cart-details h3 {
+
+            color: #243b55;
+
+            margin-bottom: 8px;
+
+            font-size: 20px;
+
+        }
+
+
+        .cart-details p {
+
+            color: #777;
+
+            font-size: 14px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .book-price {
+
+            color: #222 !important;
+
+            font-weight: bold;
+
+            font-size: 17px !important;
+
+        }
+
+
+        /* ================= QUANTITY ================= */
+
+        .quantity {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-top: 12px;
+
+        }
+
+
+        .quantity button {
+
+            width: 30px;
+
+            height: 30px;
+
+            border: none;
+
+            background-color: #243b55;
+
+            color: white;
+
+            border-radius: 4px;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+        }
+
+
+        .quantity button:hover {
+
+            background-color: #4facfe;
+
+        }
+
+
+        .quantity span {
+
+            min-width: 30px;
+
+            text-align: center;
+
+            font-weight: bold;
+
+        }
+
+
+        /* ================= ITEM TOTAL ================= */
+
+        .item-total {
+
+            text-align: right;
+
+            min-width: 100px;
+
+        }
+
+
+        .item-total p {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: #243b55;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .remove-btn {
+
+            border: none;
+
+            background-color: #e74c3c;
+
+            color: white;
+
+            padding: 8px 12px;
+
+            border-radius: 5px;
+
+            cursor: pointer;
+
+        }
+
+
+        .remove-btn:hover {
+
+            background-color: #c0392b;
+
+        }
+
+
+        /* ================= EMPTY CART ================= */
+
+        .empty-cart {
+
+            text-align: center;
+
+            padding: 70px 20px;
+
+        }
+
+
+        .empty-cart .icon {
+
+            font-size: 65px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .empty-cart h2 {
+
+            color: #243b55;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .empty-cart p {
+
+            color: #777;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .shop-btn {
+
+            display: inline-block;
+
+            text-decoration: none;
+
+            background-color: #243b55;
+
+            color: white;
+
+            padding: 12px 25px;
+
+            border-radius: 5px;
+
+        }
+
+
+        .shop-btn:hover {
+
+            background-color: #4facfe;
+
+        }
+
+
+        /* ================= SUMMARY ================= */
+
+        .summary {
+
+            background-color: white;
+
+            padding: 25px;
+
+            border-radius: 10px;
+
+            height: fit-content;
+
+            box-shadow:
+                0 3px 12px rgba(0,0,0,0.12);
+
+        }
+
+
+        .summary h2 {
+
+            color: #243b55;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .summary-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 12px 0;
+
+            border-bottom: 1px solid #eee;
+
+        }
+
+
+        .summary-row span:last-child {
+
+            font-weight: bold;
+
+        }
+
+
+        .total-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-top: 20px;
+
+            padding-top: 20px;
+
+            border-top: 2px solid #243b55;
+
+        }
+
+
+        .total-row span {
+
+            font-size: 22px;
+
+            font-weight: bold;
+
+            color: #243b55;
+
+        }
+
+
+        /* ================= CHECKOUT ================= */
+
+        .checkout-btn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-top: 20px;
+
+            border: none;
+
+            border-radius: 5px;
+
+            background-color: #27ae60;
+
+            color: white;
+
+            font-size: 17px;
+
+            cursor: pointer;
+
+        }
+
+
+        .checkout-btn:hover {
+
+            background-color: #219150;
+
+        }
+
+
+        /* ================= CONTINUE SHOPPING ================= */
+
+        .continue-shopping {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #243b55;
+
+            text-decoration: none;
+
+            font-weight: bold;
+
+        }
+
+
+        .continue-shopping:hover {
+
+            color: #4facfe;
+
+        }
+
+
+        /* ================= FOOTER ================= */
+
+        footer {
+
+            background-color: #243b55;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+            margin-top: 50px;
+
+        }
+
+
+        /* ================= MOBILE ================= */
+
+        @media(max-width: 800px) {
+
+            nav {
+
+                flex-direction: column;
+
+                gap: 15px;
+
+            }
+
+
+            nav a {
+
+                margin-left: 8px;
+
+                margin-right: 8px;
+
+            }
+
+
+            .cart-layout {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .cart-item {
+
+                flex-wrap: wrap;
+
+            }
+
+
+            .item-total {
+
+                width: 100%;
+
+                text-align: left;
+
+            }
+
+
+            .cart-header h1 {
+
+                font-size: 30px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVIGATION ================= -->
+
+<nav>
+
+    <div class="logo">
+
+        📚 E-Book Library
+
+    </div>
+
+
+    <div>
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="register.html">
+            Register
+        </a>
+
+        <a href="login.html">
+            Login
+        </a>
+
+        <a href="catalog.html">
+            Catalog
+        </a>
+
+        <a href="cart.html">
+            Cart 🛒
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ================= HEADER ================= -->
+
+<section class="cart-header">
+
+    <h1>
+        🛒 My Shopping Cart
+    </h1>
+
+    <p>
+        Manage the e-books you have selected
+    </p>
+
+</section>
+
+
+
+<!-- ================= CART ================= -->
+
+<section class="cart-section">
+
+
+    <div class="cart-top">
+
+        <h2>
+            Your Books
+        </h2>
+
+
+        <button
+            class="clear-btn"
+            onclick="clearCart()">
+
+            Clear Cart
+
+        </button>
+
+    </div>
+
+
+
+    <div class="cart-layout">
+
+
+        <!-- ================= CART ITEMS ================= -->
+
+        <div
+            class="cart-items"
+            id="cartItems">
+
+        </div>
+
+
+
+        <!-- ================= SUMMARY ================= -->
+
+        <div class="summary">
+
+            <h2>
+                Order Summary
+            </h2>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Number of Books
+                </span>
+
+                <span id="itemCount">
+                    0
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <span id="subtotal">
+                    ₹0
+                </span>
+
+            </div>
+
+
+            <div class="summary-row">
+
+                <span>
+                    Discount
+                </span>
+
+                <span id="discount">
+                    ₹0
+                </span>
+
+            </div>
+
+
+            <div class="total-row">
+
+                <span>
+                    Total
+                </span>
+
+                <span id="total">
+                    ₹0
+                </span>
+
+            </div>
+
+
+            <button
+                class="checkout-btn"
+                onclick="checkout()">
+
+                Proceed to Checkout
+
+            </button>
+
+
+            <a
+                href="catalog.html"
+                class="continue-shopping">
+
+                ← Continue Shopping
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <p>
+        &copy; 2026 E-Book Management System
+    </p>
+
+    <p>
+        All Rights Reserved.
+    </p>
+
+</footer>
+
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+
+/* =====================================================
+   GET CART
+===================================================== */
+
+let cart =
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
+
+
+
+/* =====================================================
+   DISPLAY CART
+===================================================== */
+
+function displayCart() {
+
+    const cartItems =
+        document.getElementById("cartItems");
+
+
+    cartItems.innerHTML = "";
+
+
+    /* EMPTY CART */
+
+    if (cart.length === 0) {
+
+        cartItems.innerHTML = `
+
+            <div class="empty-cart">
+
+                <div class="icon">
+                    🛒
+                </div>
+
+                <h2>
+                    Your Cart is Empty
+                </h2>
+
+                <p>
+                    You haven't added any e-books yet.
+                </p>
+
+                <a
+                    href="catalog.html"
+                    class="shop-btn">
+
+                    Browse E-Books
+
+                </a>
+
+            </div>
+
+        `;
+
+
+        updateSummary();
+
+        return;
+
+    }
+
+
+
+    /* DISPLAY BOOKS */
+
+    cart.forEach(
+        function(book, index) {
+
+            cartItems.innerHTML += `
+
+                <div class="cart-item">
+
+                    <div class="cart-image">
+
+                        <img
+                            src="${book.image}"
+                            alt="${book.name}"
+                        >
+
+                    </div>
+
+
+                    <div class="cart-details">
+
+                        <h3>
+                            ${book.name}
+                        </h3>
+
+                        <p>
+                            Author: ${book.author}
+                        </p>
+
+                        <p>
+                            Subject: ${book.subject}
+                        </p>
+
+                        <p class="book-price">
+                            ₹${book.price}
+                        </p>
+
+
+                        <div class="quantity">
+
+                            <button
+                                onclick="decreaseQuantity(${index})">
+
+                                −
+
+                            </button>
+
+
+                            <span>
+                                ${book.quantity || 1}
+                            </span>
+
+
+                            <button
+                                onclick="increaseQuantity(${index})">
+
+                                +
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="item-total">
+
+                        <p>
+                            ₹${book.price *
+                               (book.quantity || 1)}
+                        </p>
+
+
+                        <button
+                            class="remove-btn"
+                            onclick="removeBook(${index})">
+
+                            Remove
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
+    updateSummary();
+
+}
+
+
+
+/* =====================================================
+   INCREASE QUANTITY
+===================================================== */
+
+function increaseQuantity(index) {
+
+    if (!cart[index].quantity) {
+
+        cart[index].quantity = 1;
+
+    }
+
+
+    cart[index].quantity++;
+
+
+    saveCart();
+
+}
+
+
+
+/* =====================================================
+   DECREASE QUANTITY
+===================================================== */
+
+function decreaseQuantity(index) {
+
+    if (!cart[index].quantity) {
+
+        cart[index].quantity = 1;
+
+    }
+
+
+    if (cart[index].quantity > 1) {
+
+        cart[index].quantity--;
+
+    }
+
+
+    else {
+
+        let answer =
+            confirm(
+                "Remove this book from your cart?"
+            );
+
+
+        if (answer) {
+
+            cart.splice(index, 1);
+
+        }
+
+    }
+
+
+    saveCart();
+
+}
+
+
+
+/* =====================================================
+   REMOVE BOOK
+===================================================== */
+
+function removeBook(index) {
+
+    let answer =
+        confirm(
+            "Are you sure you want to remove this book?"
+        );
+
+
+    if (answer) {
+
+        cart.splice(index, 1);
+
+        saveCart();
+
+    }
+
+}
+
+
+
+/* =====================================================
+   CLEAR CART
+===================================================== */
+
+function clearCart() {
+
+    if (cart.length === 0) {
+
+        alert("Your cart is already empty.");
+
+        return;
+
+    }
+
+
+    let answer =
+        confirm(
+            "Are you sure you want to clear the entire cart?"
+        );
+
+
+    if (answer) {
+
+        cart = [];
+
+        saveCart();
+
+    }
+
+}
+
+
+
+/* =====================================================
+   SAVE CART
+===================================================== */
+
+function saveCart() {
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+
+    displayCart();
+
+}
+
+
+
+/* =====================================================
+   UPDATE SUMMARY
+===================================================== */
+
+function updateSummary() {
+
+    let itemCount = 0;
+
+    let subtotal = 0;
+
+
+    cart.forEach(
+        function(book) {
+
+            let quantity =
+                book.quantity || 1;
+
+
+            itemCount += quantity;
+
+
+            subtotal +=
+                Number(book.price) *
+                quantity;
+
+        }
+    );
+
+
+    /*
+       Example discount:
+       5% discount if subtotal >= ₹1000
+    */
+
+    let discount = 0;
+
+
+    if (subtotal >= 1000) {
+
+        discount =
+            Math.round(
+                subtotal * 0.05
+            );
+
+    }
+
+
+    let total =
+        subtotal - discount;
+
+
+    document.getElementById(
+        "itemCount"
+    ).textContent = itemCount;
+
+
+    document.getElementById(
+        "subtotal"
+    ).textContent = "₹" + subtotal;
+
+
+    document.getElementById(
+        "discount"
+    ).textContent = "₹" + discount;
+
+
+    document.getElementById(
+        "total"
+    ).textContent = "₹" + total;
+
+}
+
+
+
+/* =====================================================
+   CHECKOUT
+===================================================== */
+
+function checkout() {
+
+    if (cart.length === 0) {
+
+        alert(
+            "Your cart is empty. Please add an e-book first."
+        );
+
+        return;
+
+    }
+
+
+    let subtotal = 0;
+
+
+    cart.forEach(
+        function(book) {
+
+            subtotal +=
+                Number(book.price) *
+                (book.quantity || 1);
+
+        }
+    );
+
+
+    let discount = 0;
+
+
+    if (subtotal >= 1000) {
+
+        discount =
+            Math.round(
+                subtotal * 0.05
+            );
+
+    }
+
+
+    let total =
+        subtotal - discount;
+
+
+    alert(
+        "Order placed successfully!\n\n" +
+        "Total Amount: ₹" +
+        total +
+        "\n\nThank you for shopping with us!"
+    );
+
+
+    /*
+       Clear cart after checkout
+    */
+
+    cart = [];
+
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+
+    displayCart();
+
+}
+
+
+
+/* =====================================================
+   LOAD CART WHEN PAGE OPENS
+===================================================== */
+
+displayCart();
+
+
+</script>
+
+
+</body>
+
+</html>

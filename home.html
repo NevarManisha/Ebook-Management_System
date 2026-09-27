@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Book Management System - Home</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        nav {
+            background: #243b55;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        nav a:hover {
+            color: #4facfe;
+        }
+
+        .hero {
+            height: 450px;
+            background: linear-gradient(
+                rgba(36,59,85,0.85),
+                rgba(36,59,85,0.85)
+            ),
+            url("https://images.unsplash.com/photo-1507842217343-583bb7270b66")
+            center/cover;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 45px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: #4facfe;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .features {
+            padding: 50px 7%;
+            text-align: center;
+        }
+
+        .features h2 {
+            color: #243b55;
+            margin-bottom: 30px;
+        }
+
+        .cards {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            width: 250px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px #ccc;
+        }
+
+        .card h3 {
+            color: #243b55;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background: #243b55;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">📚 E-Book Library</div>
+
+    <div>
+        <a href="index.html">Home</a>
+        <a href="register.html">Register</a>
+        <a href="login.html">Login</a>
+        <a href="catalog.html">Catalog</a>
+        <a href="cart.html">Cart 🛒</a>
+    </div>
+</nav>
+
+<section class="hero">
+    <div>
+        <h1>Welcome to E-Book Library</h1>
+        <p>Explore thousands of books and enjoy reading online.</p>
+        <a href="catalog.html" class="btn">Browse Books</a>
+    </div>
+</section>
+
+<section class="features">
+    <h2>Why Choose Our E-Book System?</h2>
+
+    <div class="cards">
+        <div class="card">
+            <h3>📚 Large Collection</h3>
+            <p>Access books from different categories and subjects.</p>
+        </div>
+
+        <div class="card">
+            <h3>🔍 Easy Search</h3>
+            <p>Quickly find your favorite books using our catalog.</p>
+        </div>
+
+        <div class="card">
+            <h3>🛒 Easy Cart</h3>
+            <p>Add books to your cart and manage your selections.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <p>&copy; 2026 E-Book Management System</p>
+</footer>
+
+</body>
+</html>
